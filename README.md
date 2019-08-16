@@ -6,7 +6,7 @@
 
 **データ滅失・クラウド破産などを引き起こす恐れがあるため、インターネットに公開する形で実行しないでください。**
 
-**Caution: For experimental use only (on local PC), lack of identification, authentication, error handling, etc.**
+**Caution: For experimental use only (on local PC) / Lack of identification, authentication, error handling, etc.**
 
 ## 内容
 
@@ -27,4 +27,4 @@ Amazon Rekognitionで写真（容量5MB以下）を判定し、読み取られ�
 ## その他
 
  - 誤用を避けるため、環境構築に関する説明はあえて記載しません。
- - ローカルPC上の実行の際にCORS問題の解決が必要です（nginx側リバースプロキシで/app/宛てのリクエストをNode.js側ポートに流すなど）
+ - ローカルPC上の実行の際にCORS問題の解決が必要です（nginx側リバースプロキシで/app/宛てのリクエストをNode.js側ポートに流すなど）。
