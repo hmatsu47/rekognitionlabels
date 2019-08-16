@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Amazon Rekognition &amp; MySQL 8.0 X DevAPI Sample</title>
+    <link rel="stylesheet" href="./vue_index.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="title">
+        <h1>Amazon Rekognition &amp; MySQL 8.0 X DevAPI Sample</h1>
+      </div>
+      <table>
+        <tr>
+          <td class="selector">
+            <div id="uploader">
+              <h2>Image Uploader</h2>
+              <input @change="selectedFile" type="file" name="imageFile">
+              <div>
+                <button @click="upload" type="submit" class="button">Upload</button>
+              </div>
+            </div>
+            <div id="selector">
+              <h2>Label Selector</h2>
+              <div>
+                <button @click="resetData" type="submit" class="button">Reset</button>
+              </div>
+              <div>
+                <select name="selector" v-model="selected" multiple size="20">
+                  <option v-for="label in labelSelector" v-bind:value="label">
+                    {{ label }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <button @click="selectData" type="submit" class="button">Select</button>
+              </div>
+            </div>
+          </td>
+          <td class="contents">
+            <div id="result">
+              <h2>Results</h2>
+              <table class="result">
+                <tr>
+                  <th>Image</th>
+                  <th>Filename</th>
+                  <th>Labels</th>
+                </tr>
+                <tr
+                  v-for="document in resultList"
+                  v-bind:key="document._id"
+                  >
+                    <td><img :src="document.filename" :alt="document.originalname" /></td>
+                    <td>{{ document.originalname }}</td>
+                    <td>
+                      <code
+                        v-for="label in document.labels" v-bind:key="label">
+                        {{ label }}
+                      </code>
+                    </td>
+                  </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./axios.min.js"></script>
+    <script src="./vue_index.js"></script>
+  </body>
+</html>

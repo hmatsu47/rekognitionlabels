@@ -1,0 +1,105 @@
+body {
+    line-height: 150%
+}
+
+h1 {
+    font-family: Arial;
+    position: relative;
+    padding-bottom: 0.5em;
+}
+h1::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 7px;
+    box-sizing: border-box;
+    border-top: 3px solid black;
+    border-bottom: 1px solid black;
+}
+
+h2 {
+    font-family: Arial;
+    position: relative;
+    color: white;
+    padding:0.3em 0.3em 0.3em 0.3em;
+    background-color: #446689;
+    border-radius: 3px;
+}
+
+button.button {
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    font-size: 1.0em;
+    font-weight: bold;
+    padding: 6px 18px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    background-color: #446689;
+    color: #fff;
+    border-style: none;
+    box-shadow: 2px 2px 3px 1px #666;
+    -moz-box-shadow: 2px 2px 3px 1px #666;
+    -webkit-box-shadow: 2px 2px 3px 1px #666;
+}
+button.button:hover {
+    background-color: #7db9f5;
+    color: #fff;
+}
+
+.contents{
+    text-align: center;
+    vertical-align: top;
+}
+
+.selector{
+    text-align: center;
+    vertical-align: top;
+    width: 15%;
+}
+
+.result{
+    vertical-align: center;
+}
+
+div#result table{
+    border-collapse:collapse;
+    margin:0 auto;
+    font-family: Arial;
+}
+div#result th{
+    color:#005ab3;
+}
+div#result td{
+    border-bottom:1px dashed #999;
+}
+div#result th,tr:last-child td{
+    border-bottom:2px solid #446689;
+}
+div#result td,th{
+    padding:10px;
+}
+div#result img {
+    max-width: 160px;
+    max-height: 120px;
+}
+div#result code {
+    display: inline-block;
+    padding: 4px 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin: 0 9px 12px 0;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    border: 1px solid #CCC;
+}
+div#dummy code {
+    background-color: #eee;
+    padding: .1em .4em;
+    padding-top: 0.1em;
+    padding-right: 0.4em;
+    padding-bottom: 0.1em;
+    padding-left: 0.4em;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
