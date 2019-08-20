@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // for AWS Rekognition (convert file -> base64)
 function getBase64BufferFromFile(filename) {
-    return (new Promise(function(resolve, reject) {
+    return (new Promise((resolve, reject) => {
         fs.readFile(filename, 'base64', (err, data) => {
             if (err) return reject(err);
             resolve(new Buffer.from(data, 'base64'));
@@ -42,8 +42,8 @@ function detectLabelsFromBytes(bytes, maxLabels, minConfidence) {
         MaxLabels: typeof maxLabels !== 'undefined' ? maxLabels : 100,
         MinConfidence: typeof minConfidence !== 'undefined' ? minConfidence : 60.0
     };
-    return (new Promise(function(resolve, reject) {
-        rekognition.detectLabels(params, function (err, data) {
+    return (new Promise((resolve, reject) => {
+        rekognition.detectLabels(params, (err, data) => {
             if (err) return reject(err);
             resolve(data);
         });
@@ -53,16 +53,14 @@ function detectLabelsFromBytes(bytes, maxLabels, minConfidence) {
 // for MySQL document (convert array format)
 function convertArray(detectLabels) {
     let resultArray = [];
-    detectLabels.forEach(function(element) {
-        resultArray.push(element.Name);
-    });
+    detectLabels.forEach(element => resultArray.push(element.Name));
     return resultArray;
 }
 
 // for Label selector (convert resultSet format)
 function convertResultSet(rows) {
     let resultArray = [];
-    rows.forEach(function(element, index) {
+    rows.forEach((element, index) => {
         if (index == 0) {
             resultArray.push(element);
         }
@@ -73,18 +71,14 @@ function convertResultSet(rows) {
 // for Data loader (convert resultSet format)
 function convertResultSetData(rows) {
     let resultArray = [];
-    rows.forEach(function(element) {
-        resultArray.push(element);
-    });
+    rows.forEach(element => resultArray.push(element));
     return resultArray[0];
 }
 
 // for Initiator (remove image files)
 function removeFiles() {
     const targetFiles = fs.readdirSync(filePath);
-    targetFiles.forEach(function(targetFile) {
-        fs.unlinkSync(filePath + targetFile);
-    });
+    targetFiles.forEach(targetFile => fs.unlinkSync(filePath + targetFile));
 }
 
 // for HTTP response ('OK':HTTP 200)
@@ -99,7 +93,7 @@ function responseResult(res, result) {
 
 // for HTTP response (error:HTTP 400)
 function responseError400(error, res, message) {
-        responseError(error, res, message, 400);
+    responseError(error, res, message, 400);
 }
     
 // for HTTP response (error:HTTP 500)
@@ -125,7 +119,7 @@ const wepAPIPort = 38080;
 const detectMaxLabels = 10;
 const detectMinConfidence = 60.0;
 
-app.post('/upload_image', multer({dest: filePath}).single('imageFile'), function (req, res) {
+app.post('/upload_image', multer({dest: filePath}).single('imageFile'), (req, res) => {
     if (req.file.size > (5*1024*1024)) {
         responseError400('File Size Exceeded. (>5MB)', res, 'Cannot Upload File.');
         return;
@@ -146,11 +140,11 @@ app.post('/upload_image', multer({dest: filePath}).single('imageFile'), function
                 }).execute();
             // Store Labels (for Selector) in MySQL Table
             const table = await session.getSchema(schemaName).getTable(labelTableName);
-            labels.forEach(function(label) {
-                const query = table.insert('label')
-                    .values(label)
-                    .execute();
-            });
+            await Promise.all(
+                labels.map(async label =>
+                    await table.insert('label')
+                        .values(label)
+                        .execute()));
             responseOK(res);
         } catch(error) {
             responseError500(error, res, 'Cannot Detect Labels / Store Data.');
@@ -159,7 +153,7 @@ app.post('/upload_image', multer({dest: filePath}).single('imageFile'), function
 });
 
 // API:Get label selector
-app.post('/get_labels', function (req, res) {
+app.post('/get_labels', (req, res) => {
     (async () => {
         try {
             const rows = [];
@@ -178,7 +172,7 @@ app.post('/get_labels', function (req, res) {
 });
 
 // API:Select data from MySQL
-app.post('/select_data', function (req, res) {
+app.post('/select_data', (req, res) => {
     (async () => {
         try {
             const rows = [];
@@ -196,7 +190,7 @@ app.post('/select_data', function (req, res) {
 });
 
 // API:Get data from MySQL
-app.post('/get_data', function (req, res) {
+app.post('/get_data', (req, res) => {
     (async () => {
         try {
             const rows = [];
@@ -213,7 +207,7 @@ app.post('/get_data', function (req, res) {
 });
 
 // API:Initialize data
-app.post('/init_data', function (req, res) {
+app.post('/init_data', (req, res) => {
     // Remove Image Files
     removeFiles();
     (async () => {
@@ -237,7 +231,7 @@ app.post('/init_data', function (req, res) {
 });
 
 // API:Drop data
-app.post('/drop_data', function (req, res) {
+app.post('/drop_data', (req, res) => {
     // Remove Image Files
     removeFiles();
     (async () => {
@@ -257,6 +251,6 @@ app.post('/drop_data', function (req, res) {
 });
 
 // Express:Web API server
-const server = app.listen(wepAPIPort, function() {
+const server = app.listen(wepAPIPort, () => {
     console.log('[INFO]listening at port %s', server.address().port);
 });
