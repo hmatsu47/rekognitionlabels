@@ -5,7 +5,7 @@ const AWS = require('aws-sdk');
 const fs = require('fs')
 const mysqlx = require('@mysql/xdevapi');
 
-const filePath = '/dev/nginx-1.17.2/html/images/';
+const filePath = '/dev/nginx-1.17.9/html/images/';
 
 const app = express();
 

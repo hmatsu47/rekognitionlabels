@@ -20,9 +20,9 @@ Amazon Rekognitionで写真（容量5MB以下）を判定し、読み取られ�
 
 ## 必要物
 
- - MySQL Community Server 8.0.17～
- - nginx 1.17.2～
- - Node.js 12.8.0～
+ - MySQL Community Server 8.0.19～
+ - nginx 1.17.9～
+ - Node.js 12.16.1～
  - Vue.js 2.6.10～
  - axios v0.19.0～
 
